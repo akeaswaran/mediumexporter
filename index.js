@@ -4,6 +4,8 @@ var program = require('commander')
   , utils = require('./utils')
   , package = require('./package.json')
   , Promise = require('bluebird')
+  ,	fs = require('fs'),
+  	dateformat = require('dateformat')
   ;
 
 program
@@ -12,13 +14,15 @@ program
   .usage('[options] <medium post url>')
   .option('-H, --headers', 'Add headers at the beginning of the markdown file with metadata')
   .option('-S, --separator <separator>', 'Separator between headers and body','')
+  .option('-O, --output <output folder location>', 'Where to put the new file','')
+  .option('-B, --addMetadata', 'Add personal blog metadata to the top of the file','')
   .option('-I, --info', 'Show information about the medium post')
   .option('-d, --debug', 'Show debugging info')
   .on('--help', function(){
     console.log('  Examples:');
     console.log('');
-    console.log('    $ mediumexporter https://medium.com/@xdamman/my-10-day-meditation-retreat-in-silence-71abda54940e > medium_post.md');
-    console.log('    $ mediumexporter --headers --separator --- https://medium.com/@xdamman/my-10-day-meditation-retreat-in-silence-71abda54940e > medium_post.md');
+    console.log('    $ mediumexporter https://medium.com/@xdamman/my-10-day-meditation-retreat-in-silence-71abda54940e --output medium_posts');
+    console.log('    $ mediumexporter --headers --separator --- --output medium_post.md https://medium.com/@xdamman/my-10-day-meditation-retreat-in-silence-71abda54940e --output medium_posts');
     console.log('    $ mediumexporter mediumpost.json');
     console.log('');
   });
@@ -72,7 +76,7 @@ utils.loadMediumPost(mediumURL, function(err, json) {
   var promises = [];
 
   for(var i=2;i<story.paragraphs.length;i++) {
-    
+
     if(sections[i]) story.markdown.push(sections[i]);
 
     var promise = new Promise(function (resolve, reject) {
@@ -96,7 +100,25 @@ utils.loadMediumPost(mediumURL, function(err, json) {
     if (program.debug) {
       console.log("debug", story.paragraphs);
     }
-    console.log(story.markdown.join('\n'));
-  });
 
+	var postContent = '';
+	var generatedFileName = utils.strReplaceAll(story.title.toLocaleLowerCase(), " ", "-");
+	if (program.addMetadata) {
+		postContent += '---\n'
+		postContent += 'layout: post\n';
+		postContent += 'title: ' + story.title + '\n';
+		postContent += 'description: ' + story.subtitle + '\n';
+		postContent += 'permalink: /' + generatedFileName + '/\n';
+		postContent += '---\n\n';
+	}
+
+	postContent += story.markdown.join('\n');
+
+	var fileName = program.output + '/' + dateformat(story.date, 'yyyy-mm-dd') + '-' + generatedFileName + '.md';
+	console.log('Writing post to file: ' + fileName + '...\n');
+	fs.writeFile(fileName, postContent, (err) => {
+	  if (err) throw err;
+	  console.log('Export done! See ' + program.output + ' for your post!\n\n');
+	});
+  });
 });

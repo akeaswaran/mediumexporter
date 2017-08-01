@@ -142,6 +142,9 @@ var utils = {
       }
     }
     return markups_array;
+  },
+  strReplaceAll: function(original, search, replacement) {
+    return original.split(search).join(replacement);
   }
 }
 

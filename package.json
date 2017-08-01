@@ -9,6 +9,8 @@
   "dependencies": {
     "bluebird": "^3.5.0",
     "commander": "^2.8.1",
+    "dateformat": "^2.0.0",
+    "fs": "0.0.1-security",
     "request": "^2.60.0"
   },
   "devDependencies": {

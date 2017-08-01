@@ -1,16 +1,9 @@
-url: https://medium.com/javascript-scene/why-i-use-tape-instead-of-mocha-so-should-you-6aa105d8eaf4
-date: Wed Feb 11 2015 17:16:08 GMT-0200 (BRST)
 
+# Why I use Tape
+# Instead of Mocha &
+# So Should You
 
-#Why I use Tape
-#Instead of Mocha &
-#So Should You
-
-##Measuring Software Quality
-
-![](https://medium2.global.ssl.fastly.net/max/6016/1*d7mHlwL1eQ4n9ZZJzlF0HA.jpeg)
-
-###Measuring Software Quality
+Measuring Software Quality
 > TL;DR: Mocha is a $150k Porsche Panamera when the best tool for the job is a $30k Tesla Model 3. Don’t waste your resources on testing bells and whistles. Invest them in creating your app, instead.
 
 As many of you know, I maintain a popular project called the [Essential JavaScript Links collection](https://github.com/ericelliott/essential-javascript-links#essential-javascript-links) — a one stop shop to find the best JavaScript resources I know. Once in a while somebody will ask me why I don’t list their favorite thing, or the most popular thing.
@@ -19,7 +12,7 @@ Sometimes popularity is an indication of quality. Other times, popular things ar
 
 On real production projects, I have used Jasmine, Mocha, NodeUnit, Tape, and a bunch of other solutions. I have investigated *many other options.* For the last few years, I have used and continue to use [Tape](https://github.com/substack/tape) along with Supertest (for API testing) on all of my personal projects and projects that I lead.
 
-###What are Unit tests?
+### What are Unit tests?
 
 
 
@@ -29,7 +22,7 @@ If you find that it’s hard to write unit tests for your program without mockin
 
 Every module should have unit tests, and every application should be made up of modules. In other words, if you’re not writing unit tests, you should be.
 
-###What’s Wrong with Mocha, Jasmine, etc…?
+### What’s Wrong with Mocha, Jasmine, etc…?
 
 
 
@@ -41,26 +34,28 @@ Every module should have unit tests, and every application should be made up of 
 
 
 
-###Why Tape?
+### Why Tape?
+
+
 
 I won’t list Mocha in the Essential JavaScript Links because Mocha does way too much and gives developers way too many assertion choices, and that leads to [analysis paralysis](http://en.wikipedia.org/wiki/Analysis_paralysis) and lost productivity. Every time I have seen Mocha used on a project, I’ve seen developers dump way too much time in the testing framework and testing environment.
 
 While I’m ranting I would be remiss if I didn’t mention that if you spend a lot of time on mocks and stubs, that’s a strong code-smell. You can probably dramatically simplify both your tests and your application by breaking your app into more modular chunks.
-> #Mocking is a code smell.
+> # Mocking is a code smell.
 
 A few simple mocks here and there are OK. Some of your app will inevitably involve side-effects (reading from or writing to the network or filesystem, for instance). When you do have a genuine need for mocks, keep them simple. Little more than basic stubs are ideal. But on many projects, I’ve seen a lot of over-complicated mocks that never needed to exist in the first place. Why maintain more code than you need to?
 
 The more you break your problems down into simple, [pure](https://en.wikipedia.org/wiki/Pure_function) [functions](https://medium.com/javascript-scene/the-two-pillars-of-javascript-pt-2-functional-programming-a63aa53a41a4), the easier it will be to test your code *without mocks.*
-> #Testing is not what you should
-> #spend most of your time doing.
+> # Testing is not what you should
+> # spend most of your time doing.
 
 You should spend most of your time thinking about how to create the best, most flexible, most performant solutions given the afforded time constraints. Time is value in the software development world, and you shouldn’t waste one minute of it.
 
 If you get your kicks burning money, use Mocha, Jasmine, Jest, etc… But if you value your time, keep reading.
 
 With many BDD assertion libraries, there are getters with side effects. At one company I worked for (not naming names), that buried a bug in one of our tests, and we spent far too long debugging the test case rather than developing actual application code.
-> #Test assertions should be dead simple,
-> #& [completely free of magic](https://en.wikipedia.org/wiki/Magic_(programming)).
+> # Test assertions should be dead simple,
+> # & [completely free of magic](https://en.wikipedia.org/wiki/Magic_(programming)).
 
 *`equal`*, *`deepEqual`*, *`pass`* & *`fail`* are my primary go-to assertions. If *`equal`* and *`deepEqual`* were the only assertions available anywhere, the testing world would probably be better off for it.
 
@@ -77,8 +72,8 @@ Test cases should be written in much the same way:
 1. Compare that to the *actual value.*
 
 When a unit tests fails, *the error message is your bug report.*
-> #Your test descriptions should be clear
-> #enough to use as documentation.
+> # Your test descriptions should be clear
+> # enough to use as documentation.
 
 <iframe src="https://medium.com/media/9d8e481812059cb5d76ec771194c2ecb" frameborder=0></iframe>
 
@@ -101,8 +96,8 @@ If you write tests this way, your test error messages should be clear enough to 
     # tests 2
     # pass 1
     # fail 1
-> #Your automated test error messages
-> #are your bug reports.
+> # Your automated test error messages
+> # are your bug reports.
 
 Simple tests assertions provide:
 
@@ -118,7 +113,7 @@ These features trump all the bells and whistles in the world.
 
 
 
-###Testing tools should be modular
+### Testing tools should be modular
 
 
 
@@ -130,7 +125,7 @@ Jest bills itself as a better end-to-end solution with automatic mocking of Node
 
 Solutions like Mocha and Jasmine are harder to fit into your continuous integration pipeline than tape.
 
-###TAP
+### TAP
 
 
 
@@ -140,11 +135,11 @@ You could think of Tape as a pure CLI tool that takes unit tests as input and pr
 
 Remember that bland test output above? Here’s what it looks like:
 
-![](https://medium2.global.ssl.fastly.net/max/4588/1*nMh82PZ4qSbqj1bEjDxTGQ.png)**
+![](https://cdn-images-1.medium.com/max/4588/1*nMh82PZ4qSbqj1bEjDxTGQ.png)
 
 
 
-###Your turn!
+### Your turn!
 
 
 
@@ -187,11 +182,11 @@ Look familiar? You can even pipe it through *`faucet`:*
 
     browserify -t babelify test.js | browser-run -p 2222 | faucet
 
-![](https://medium2.global.ssl.fastly.net/max/5024/1*ngzfOQOLpjd9hodsdyv7-w.png)**
+![](https://cdn-images-1.medium.com/max/5024/1*ngzfOQOLpjd9hodsdyv7-w.png)
 
 
 
-###Modularity > *
+### Modularity > *
 
 
 
@@ -205,13 +200,13 @@ I recently started using promises in my unit tests. I switched from Tape to Blue
 
 I few weeks ago I ported an entire app test suite from QUnit (jQuery test framework) to Tape. It took 5 minutes. On a recent job I moved a bunch of inline assertions from the live code into unit tests (which was a better place for these particular assertions). I literally copied, pasted and did one search & replace.
 
-###Parallel Testing
+### Parallel Testing
 
 Think you’ll miss automagic test parallelization? I keep tests for different modules in different files. It takes about five minutes to write a little wrapper that will fire up workers across all your machine cores and zip through them in parallel.
 
 
 
-###Before/After/BeforeEach/AfterEach
+### Before/After/BeforeEach/AfterEach
 
 
 
@@ -221,7 +216,7 @@ You don’t need these. They’re bad for your test suite. Really. I have seen t
 
 
 
-###Fewer features is the new feature-rich
+### Fewer features is the new feature-rich
 
 
 
@@ -236,9 +231,9 @@ It’s also a breeze to integrate all of this stuff with continuous integration 
 P.S. If you’re unit testing [React components](https://medium.com/javascript-scene/baby-s-first-reaction-2103348eccdd), use the [shallow renderer](http://simonsmith.io/unit-testing-react-components-without-a-dom/).
 
 Do you want bells and whistles, or do you want flexibility? If you want your testing to just get out of your way and let you concentrate on building things…
-> #**You can’t beat [Tape](https://github.com/substack/tape).**
-> #[Learn JavaScript
-> #Software Testing with Sauce Labs](https://ericelliottjs.com/product/learn-javascript-software-testing-with-sauce-labs/)
+> # **You can’t beat [Tape](https://github.com/substack/tape).**
+> # [Learn JavaScript
+> # Software Testing with Sauce Labs](https://ericelliottjs.com/product/learn-javascript-software-testing-with-sauce-labs/)
 
 ***Eric Elliott** is the author of [“Programming JavaScript Applications”](http://pjabook.com) (O’Reilly), host of the documentary film-in-production, **“Programming Literacy”**. He has contributed to software experiences for **Adobe Systems**, **Zumba Fitness**, **The Wall Street Journal**, **ESPN**, **BBC**, and top recording artists including **Usher**, **Frank Ocean**, **Metallica**, and many more.*
 
